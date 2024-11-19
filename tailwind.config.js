@@ -33,6 +33,10 @@ export default {
 				sans: ["Plus Jakarta Sans", "Arial", "sans-serif"],
 				heading: ["Space Grotesk", "Arial", "sans-serif"],
 			},
+			container: {
+				center: true,
+				padding: "1rem",
+			},
 		},
 	},
 	plugins: [],
