@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root{
+    --background: #161616;
+    --primary: #3D51EE;
+    --secondary: #65CD4E;
+    --input-bg: #3D3D3D;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply box-border;
+  }
+  body {
+    @apply bg-background text-white;
+  }
+}
