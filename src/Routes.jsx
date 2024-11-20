@@ -5,6 +5,8 @@ import DemoPage from "./pages/component-demo";
 import Explore from "./pages/explore";
 import Province from "./pages/province";
 import Layout from "./layouts";
+import EventDetails from "./pages/explore/event-details";
+import ParishDetails from "./pages/explore/parish-details";
 
 export default function AllRoutes() {
 	return (
@@ -15,7 +17,10 @@ export default function AllRoutes() {
 				<Route path="/" element={<Layout />}>
 					<Route path="/" index element={<DemoPage />} />
 					<Route path="/explore" index element={<Explore />} />
+					<Route path="/explore/:id" index element={<ParishDetails />} />
+					<Route path="/events/:id" index element={<EventDetails />} />
 					<Route path="/province" index element={<Province />} />
+					<Route path="/accounts" index element={<Province />} />
 				</Route>
 			</Routes>
 		</>

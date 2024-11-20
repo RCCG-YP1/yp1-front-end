@@ -17,9 +17,9 @@ const Layout = ({ children }) => {
 	];
 
 	return (
-		<div className="flex flex-col md:flex-row h-screen">
+		<div className="flex flex-col md:flex-row">
 			{/* Sidebar */}
-			<div className="hidden md:flex flex-col w-20 lg:w-64 bg-background border-r border-input-bg">
+			<div className="hidden sticky top-0 bottom-0 h-screen max-h-screen md:flex flex-col w-20 lg:w-64 bg-background border-r border-input-bg">
 				<div className="flex items-center justify-center lg:justify-start p-4 lg:p-6">
 					<img src="/images/logo.png" alt="rccg youth province 1 logo" />
 				</div>
@@ -64,7 +64,7 @@ const Layout = ({ children }) => {
 			</div>
 
 			{/* Main Content */}
-			<main className="flex-grow overflow-y-auto container max-w-2xl mx-auto py-4">
+			<main className="flex-grow relative container pb-[100px] md:pb-[50px] max-w-2xl mx-auto py-4">
 				{children ? children : <Outlet />}
 			</main>
 		</div>

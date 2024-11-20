@@ -8,7 +8,7 @@ const Button = ({
 	...props
 }) => {
 	const baseStyles =
-		"rounded-md text-sm font-medium px-4 py-2 focus:outline-none transition flex gap-2";
+		"rounded-md text-sm font-medium px-4 py-2 focus:outline-none transition flex gap-2 flex gap-2 items-center justify-center min-h-[50px]";
 
 	// styles for different variants and colors: more can be added
 	const colorStyles = {
