@@ -6,6 +6,7 @@ import Explore from "./pages/explore";
 import Province from "./pages/province";
 import Account from "./pages/account";
 import CreateAccount from "./pages/account/create-account";
+import PersonalInformation from "./pages/account/personal-information";
 import Layout from "./layouts";
 import EventDetails from "./pages/explore/event-details";
 import ParishDetails from "./pages/explore/parish-details";
@@ -24,6 +25,11 @@ export default function AllRoutes() {
           <Route path="/province" index element={<Province />} />
           <Route path="/accounts" index element={<Account />} />
           <Route path="/create-account" index element={<CreateAccount />} />
+          <Route
+            path="/personal-information"
+            index
+            element={<PersonalInformation />}
+          />
         </Route>
       </Routes>
     </>

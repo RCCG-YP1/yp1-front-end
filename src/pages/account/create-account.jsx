@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Input from "@/components/forms/input";
 import BackBtn from "@/components/back-btn";
 import Button from "@/components/button/index";
 import GoogleIcon from "@/assets/icons/google-icon";
 export default function Account() {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const [isFocused, setIsFocused] = useState(false); // Track focus state
+  const [password, setPassword] = useState(""); // Track password value
+
+  const passwordRequirements = [
+    "At least 8 characters",
+    "Contains uppercase and lowercase letters",
+  ];
   return (
     <div className="min-h-screen text-left">
       <div className="container mx-auto max-w-sm  py-8 rounded-lg shadow-md">
@@ -26,7 +39,7 @@ export default function Account() {
           Already have an account
         </Link>
 
-        {/* Login Form */}
+        {/* create account form */}
         <form className="mt-11">
           <div className="mb-4">
             <Input
@@ -40,22 +53,39 @@ export default function Account() {
             <div className="relative">
               <Input
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Create password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onFocus={() => setIsFocused(true)} // Show requirements on focus
+                onBlur={() => setIsFocused(false)}
                 className="text-[13px]"
               />
               <button
                 type="button"
+                onClick={togglePasswordVisibility}
                 className="absolute inset-y-0 right-2 text-[10px] text-gray-300"
               >
                 SHOW
               </button>
             </div>
+            {isFocused && (
+              <ul className="mt-2 text-sm text-secondary">
+                {passwordRequirements.map((requirement, index) => (
+                  <li key={index} className="flex items-center gap-2">
+                    <span>•</span>
+                    {requirement}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
-          <Button type="submit" className="w-full mt-10">
-            Create my account
-          </Button>
+          <Link to="/personal-information">
+            <Button type="submit" className="w-full mt-10">
+              Create my account
+            </Button>
+          </Link>
         </form>
 
         {/* Or Divider */}
