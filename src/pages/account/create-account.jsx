@@ -1,16 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Input from "@/components/forms/input";
 import BackBtn from "@/components/back-btn";
 import Button from "@/components/button/index";
 import GoogleIcon from "@/assets/icons/google-icon";
 export default function Account() {
-  const [showPassword, setShowPassword] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
-  };
-
   return (
     <div className="min-h-screen text-left">
       <div className="container mx-auto max-w-sm  py-8 rounded-lg shadow-md">
@@ -26,13 +20,10 @@ export default function Account() {
 
         {/* Title */}
         <h2 className=" text-lg font-semibold text-gray-300 mb-4">
-          Log in to your Believer's Bridge account.
+          Create your Believer's Bridge account.
         </h2>
-        <Link
-          to="/create-account"
-          className=" text-sm text-secondary cursor-pointer"
-        >
-          Create an account instead
+        <Link to="/" className=" text-sm text-secondary  cursor-pointer">
+          Already have an account
         </Link>
 
         {/* Login Form */}
@@ -40,7 +31,7 @@ export default function Account() {
           <div className="mb-4">
             <Input
               id="username"
-              placeholder="Email or username"
+              placeholder="Email address"
               className="text-[13px]"
             />
           </div>
@@ -49,13 +40,12 @@ export default function Account() {
             <div className="relative">
               <Input
                 id="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
+                type="password"
+                placeholder="Create password"
                 className="text-[13px]"
               />
               <button
                 type="button"
-                onClick={togglePasswordVisibility}
                 className="absolute inset-y-0 right-2 text-[10px] text-gray-300"
               >
                 SHOW
@@ -63,12 +53,8 @@ export default function Account() {
             </div>
           </div>
 
-          <p className=" text-sm text-secondary mb-10 cursor-pointer">
-            Forgot password?
-          </p>
-
-          <Button type="submit" className="w-full">
-            Log in to my account
+          <Button type="submit" className="w-full mt-10">
+            Create my account
           </Button>
         </form>
 
