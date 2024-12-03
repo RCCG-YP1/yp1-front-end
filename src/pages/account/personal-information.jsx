@@ -15,7 +15,7 @@ export default function Account() {
         <div className=" mb-6 flex items-center gap-1">
           <BackBtn />
           <img
-            src="public/images/logo.png"
+            src="/images/logo.png"
             alt="Believer's Bridge Logo"
             className="h-16"
           />
@@ -75,10 +75,11 @@ export default function Account() {
               </p>
             )}
           </div>
-
-          <Button type="submit" className="w-full mt-10">
-            Complete setup
-          </Button>
+          <Link to="/profile">
+            <Button type="submit" className="w-full mt-10">
+              Complete setup
+            </Button>
+          </Link>
         </form>
       </div>
     </div>

@@ -4,20 +4,13 @@ import Input from "@/components/forms/input";
 import BackBtn from "@/components/back-btn";
 import Button from "@/components/button/index";
 import GoogleIcon from "@/assets/icons/google-icon";
-export default function Account() {
+export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const [isFocused, setIsFocused] = useState(false); // Track focus state
-  const [password, setPassword] = useState(""); // Track password value
-
-  const passwordRequirements = [
-    "At least 8 characters",
-    "Contains uppercase and lowercase letters",
-  ];
   return (
     <div className="min-h-screen text-left">
       <div className="container mx-auto max-w-sm  py-8 rounded-lg shadow-md">
@@ -33,18 +26,21 @@ export default function Account() {
 
         {/* Title */}
         <h2 className=" text-lg font-semibold text-gray-300 mb-4">
-          Create your Believer's Bridge account.
+          Log in to your Believer's Bridge account.
         </h2>
-        <Link to="/sign-in" className=" text-sm text-secondary  cursor-pointer">
-          Already have an account
+        <Link
+          to="/create-account"
+          className=" text-sm text-secondary cursor-pointer"
+        >
+          Create an account instead
         </Link>
 
-        {/* create account form */}
+        {/* Login Form */}
         <form className="mt-11">
           <div className="mb-4">
             <Input
               id="username"
-              placeholder="Email address"
+              placeholder="Email or username"
               className="text-[13px]"
             />
           </div>
@@ -54,11 +50,7 @@ export default function Account() {
               <Input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                placeholder="Create password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onFocus={() => setIsFocused(true)} // Show requirements on focus
-                onBlur={() => setIsFocused(false)}
+                placeholder="Password"
                 className="text-[13px]"
               />
               <button
@@ -69,23 +61,15 @@ export default function Account() {
                 SHOW
               </button>
             </div>
-            {isFocused && (
-              <ul className="mt-2 text-sm text-secondary">
-                {passwordRequirements.map((requirement, index) => (
-                  <li key={index} className="flex items-center gap-2">
-                    <span>•</span>
-                    {requirement}
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
 
-          <Link to="/personal-information">
-            <Button type="submit" className="w-full mt-10">
-              Create my account
-            </Button>
-          </Link>
+          <p className=" text-sm text-secondary mb-10 cursor-pointer">
+            Forgot password?
+          </p>
+
+          <Button type="submit" className="w-full">
+            Log in to my account
+          </Button>
         </form>
 
         {/* Or Divider */}
