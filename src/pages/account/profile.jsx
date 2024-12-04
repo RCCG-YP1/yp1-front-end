@@ -62,7 +62,9 @@ export default function Profile({ setIsLoggedIn }) {
         </div>
 
         <div
-          onClick={() => setIsLoggedIn(false)}
+          onClick={() => {
+            setIsLoggedIn(false);
+          }}
           className="flex items-center gap-2 mt-12 text-red-500 hover:text-red-600 cursor-pointer ml-3"
         >
           <LogOut />
