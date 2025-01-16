@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-undef
-const tinycolor = require("tinycolor2");
+const tinycolor = await import("tinycolor2");
 
 function generateShades(baseColor) {
 	return {
