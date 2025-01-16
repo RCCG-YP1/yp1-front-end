@@ -1,4 +1,4 @@
-const tinycolor = await import("tinycolor2");
+import tinycolor from "tinycolor2";
 
 function generateShades(baseColor) {
 	return {
