@@ -64,7 +64,7 @@ function DemoPage() {
 				{/* Chip with Delete */}
 				<Chip label="Deletable Chip" color="warning" onDelete={handleDelete} />
 			</div>
-			<Input placeholder="Enter Text" />
+			<Input label={"Hello"} placeholder="Enter Text" />
 			<Search onSearch={handleSearch} suggestions={suggestions} />
 			<Modal
 				isOpen={isModalOpen}

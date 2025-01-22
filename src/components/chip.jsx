@@ -13,6 +13,7 @@ const Chip = ({
 
 	const colorClasses = {
 		default: "bg-input-bg text-textSecondary",
+		gray: "text-gray-800 bg-gray-100",
 		primary: "bg-primary text-white",
 		secondary: "bg-secondary text-white",
 		success: "bg-green-500 text-white",
