@@ -15,6 +15,9 @@ import NotLoggedIn from "./pages/account";
 import Profile from "./pages/account/profile";
 import Account from "./pages/account/create-account";
 import SignIn from "./pages/account/sign-in";
+import Pastor from "./pages/pastor";
+import Parish from "./pages/parish";
+import Dashboard from "./pages/dashboard";
 
 export default function AllRoutes() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -29,6 +32,9 @@ export default function AllRoutes() {
           <Route path="/explore/:id" index element={<ParishDetails />} />
           <Route path="/events/:id" index element={<EventDetails />} />
           <Route path="/province" index element={<Province />} />
+          <Route path="/parish" index element={<Parish />} />
+          <Route path="/pastor" index element={<Pastor />} />
+          <Route path="/dashboard" index element={<Dashboard />} />
           <Route
             path="/accounts"
             index
