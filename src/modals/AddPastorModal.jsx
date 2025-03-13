@@ -1,107 +1,43 @@
-import Modal from "@/components/modal";
+import Modal from "../components/modal";
 import React from "react";
 
-export default function AddPastorModal() {
+export default function AddPastorModal({ isOpen, onClose }) {
+  if (!isOpen) return null;
   return (
-    <Modal>
-      <h1>Add new Parish</h1>
+    <Modal isOpen={isOpen} onClose={onClose} size="lg" title="Add Pastor">
       <div>
-        <h3>DETAILS</h3>
-        <form action="">
+        <h3 className="text-black">DETAILS</h3>
+        <form className="text-sm ">
           <div>
-            <label className="block text-sm font-medium">Name</label>
+            <label className="block text-sm font-medium text-black">
+              Pastor's Name
+            </label>
             <input
               type="text"
-              className="w-full border rounded-lg p-2 mt-1"
+              className="w-full border rounded-lg p-2 mt-0"
               placeholder="Name"
             />
+            <button className="mt-2 text-green-600 flex items-center">
+              📤 Upload photo
+            </button>
           </div>
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-sm font-medium">Zone</label>
-              <select className="w-full border rounded-lg p-2 mt-1">
+          <div className="grid grid-cols-2 gap-4 mb-0">
+            <div className="text-black">
+              <label className="block text-sm font-medium">Church</label>
+              <select className="w-full border rounded-lg p-2 mt-0">
                 <option>Select</option>
               </select>
             </div>
-            <div>
-              <label className="block text-sm font-medium">Area</label>
-              <select className="w-full border rounded-lg p-2 mt-1">
-                <option>Select</option>
-              </select>
-            </div>
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium">Church Address</label>
-            <input
-              type="text"
-              className="w-full border rounded-lg p-2 mt-1"
-              placeholder="Address"
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-sm font-medium">State</label>
-              <select className="w-full border rounded-lg p-2 mt-1">
-                <option>Select</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium">City</label>
-              <select className="w-full border rounded-lg p-2 mt-1">
+            <div className="text-black">
+              <label className="block text-sm font-medium">Level</label>
+              <select className="w-full border rounded-lg p-2 mt-0">
                 <option>Select</option>
               </select>
             </div>
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium">Map Link</label>
-            <input
-              type="text"
-              className="w-full border rounded-lg p-2 mt-1"
-              placeholder="https://maps.app.goo.gl/"
-            />
-          </div>
-          <h3 className="text-lg font-semibold mt-6 mb-2">Leadership</h3>
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium">
-                Pastor-in-Charge
-              </label>
-              <input
-                type="text"
-                className="w-full border rounded-lg p-2 mt-1"
-                placeholder="Name"
-              />
-              <button className="mt-2 text-green-600 flex items-center">
-                📤 Upload photo
-              </button>
-            </div>
-            <div>
-              <label className="block text-sm font-medium">
-                Assistant Pastor-in-Charge
-              </label>
-              <input
-                type="text"
-                className="w-full border rounded-lg p-2 mt-1"
-                placeholder="Name"
-              />
-              <button className="mt-2 text-green-600 flex items-center">
-                📤 Upload photo
-              </button>
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Associate</label>
-              <input
-                type="text"
-                className="w-full border rounded-lg p-2 mt-1"
-                placeholder="Name"
-              />
-              <button className="mt-2 text-green-600 flex items-center">
-                📤 Upload photo
-              </button>
-            </div>
-          </div>
+
           <div>
-            <h3 className="text-lg font-semibold mt-6 mb-2">Social Media</h3>
+            <h3 className="text-lg font-semibold mt-1 mb-0">Social Media</h3>
             <div className="grid grid-cols-3 gap-4">
               {[
                 { name: "YouTube", url: "https://youtube.com/" },
@@ -124,15 +60,8 @@ export default function AddPastorModal() {
               ))}
             </div>
           </div>
-          <div className="mt-4">
-            <label className="block text-sm font-medium">Website</label>
-            <input
-              type="text"
-              className="w-full border rounded-lg p-2 mt-1"
-              placeholder="https://www.website.com"
-            />
-          </div>
-          <div className="flex justify-between mt-6">
+
+          <div className="flex justify-between mt-1">
             <button className="bg-black text-white px-6 py-2 rounded-lg">
               Cancel
             </button>

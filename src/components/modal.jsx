@@ -7,7 +7,7 @@ const Modal = ({
   onClose,
   title,
   children,
-  size = "md", // (sm, md, lg, xl)
+  // size = "xl",  (sm, md, lg, xl)
 }) => {
   useEffect(() => {
     // Prevent background scrolling when modal is open
@@ -36,8 +36,8 @@ const Modal = ({
       {/* Modal Dialog */}
       <div
         className={classNames(
-          "relative bg-input-bg rounded-lg shadow-lg w-full mx-4",
-          sizeClasses[size]
+          "relative bg-input-bg rounded-lg max-h-screen overflow-y-auto shadow-lg w-[700px] mx-4"
+          // sizeClasses[size]
         )}
       >
         {/* Modal Header */}

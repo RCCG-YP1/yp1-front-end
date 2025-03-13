@@ -6,14 +6,12 @@ import AddPastorModal from "@/modals/AddPastorModal";
 import React, { useState } from "react";
 
 export default function Pastor() {
-  const [isOpen, SetIsOpen] = useState(false);
-  const [isModalOpen, SetIsModalOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const handleUser = () => {
-    SetIsOpen(!isOpen);
+    setIsFilterOpen(!isFilterOpen);
   };
-  const handleModal = () => {
-    SetIsModalOpen(true);
-  };
+
   return (
     <div>
       <h1>Pastors</h1>
@@ -32,19 +30,15 @@ export default function Pastor() {
         </div>
         <div
           className="flex justify-center gap-1 items-center bg-slate-600 rounded py-1 px-2 cursor-pointer"
-          onClick={handleModal}
+          onClick={() => setIsOpen(true)}
         >
           <AddIcon />
           <p className="text-sm">Add pastor</p>
         </div>
+        <AddPastorModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
       </div>
-      <AddPastorModal
-        isModalOpen={isModalOpen}
-        onClose={() => SetIsModalOpen(false)}
-        // parish
-      />
 
-      <div className={`${isOpen ? "block" : "hidden"}`}>
+      <div className={`${isFilterOpen ? "block" : "hidden"}`}>
         <div className="flex items-center gap-3 my-4 text-sm">
           <p className="mx-3">Filter</p>
           <p className="bg-slate-700 rounded-xl py-1 px-2">PICP</p>
