@@ -138,7 +138,7 @@ export default function AddPastorModal({ isOpen, onClose }) {
               placeholder="https://www.website.com"
             />
           </div>
-          <div className="flex justify-between mt-1">
+          <div className="flex gap-8 mt-1">
             <button className="bg-black text-white px-6 py-2 rounded-lg">
               Cancel
             </button>

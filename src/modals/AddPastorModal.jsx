@@ -61,12 +61,12 @@ export default function AddPastorModal({ isOpen, onClose }) {
             </div>
           </div>
 
-          <div className="flex justify-between mt-1">
+          <div className="flex gap-8 mt-1">
             <button className="bg-black text-white px-6 py-2 rounded-lg">
               Cancel
             </button>
-            <button className="bg-green-600 text-white px-6 py-2 rounded-lg flex items-center">
-              ✅ Save Parish
+            <button className="bg-cyan-800 text-white px-6 py-2 rounded-lg flex items-center">
+              Save
             </button>
           </div>
         </form>

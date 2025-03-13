@@ -17,6 +17,7 @@ const Layout = ({ children }) => {
     { name: "Pastor", icon: <UserIcon />, path: "/pastor" },
     { name: "Parish", icon: <UserIcon />, path: "/parish" },
     { name: "Dashboard", icon: <UserIcon />, path: "/dashboard" },
+    { name: "Information", icon: <UserIcon />, path: "/information" },
   ];
 
   return (
