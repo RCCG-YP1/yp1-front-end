@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function italicIcon() {
+export default function ItalicIcon(props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,6 +8,7 @@ export default function italicIcon() {
       height="13"
       viewBox="0 0 11 13"
       fill="none"
+      {...props}
     >
       <path
         d="M3.5 1.28125C3.5 0.925781 3.77344 0.625 4.15625 0.625H9.84375C10.1992 0.625 10.5 0.925781 10.5 1.28125C10.5 1.66406 10.1992 1.9375 9.84375 1.9375H7.95703L3.9375 11.5625H6.34375C6.69922 11.5625 7 11.8633 7 12.2188C7 12.6016 6.69922 12.875 6.34375 12.875H0.65625C0.273438 12.875 0 12.6016 0 12.2188C0 11.8633 0.273438 11.5625 0.65625 11.5625H2.51562L6.53516 1.9375H4.15625C3.77344 1.9375 3.5 1.66406 3.5 1.28125Z"

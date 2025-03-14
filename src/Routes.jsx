@@ -19,6 +19,7 @@ import Pastor from "./pages/pastor";
 import Parish from "./pages/parish";
 import Dashboard from "./pages/dashboard";
 import Information from "./pages/information";
+import Members from "./pages/members";
 
 export default function AllRoutes() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -37,6 +38,7 @@ export default function AllRoutes() {
           <Route path="/pastor" index element={<Pastor />} />
           <Route path="/dashboard" index element={<Dashboard />} />
           <Route path="/information" index element={<Information />} />
+          <Route path="/members" index element={<Members />} />
           <Route
             path="/accounts"
             index
