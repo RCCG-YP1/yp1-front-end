@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import ScrollToTop from "@/components/scrollToTop";
 import DemoPage from "./pages/component-demo";
@@ -13,8 +13,10 @@ import EventDetails from "./pages/explore/event-details";
 import ParishDetails from "./pages/explore/parish-details";
 import NotLoggedIn from "./pages/account";
 import Profile from "./pages/account/profile";
-import Account from "./pages/account/create-account";
 import SignIn from "./pages/account/sign-in";
+import DashboardLayout from "./layouts/dashboard-layout";
+import AdminHome from "./pages/admin";
+import AdminParishes from "./pages/admin/parish";
 import Pastor from "./pages/pastor";
 import Parish from "./pages/parish";
 import Dashboard from "./pages/dashboard";
@@ -60,6 +62,12 @@ export default function AllRoutes() {
             index
             element={<PersonalInformation />}
           />
+
+          {/* admin */}
+        </Route>
+        <Route path="/admin" element={<DashboardLayout baseUrl="/admin" />}>
+          <Route index path="" element={<AdminHome />} />
+          <Route index path="parishes" element={<AdminParishes />} />
         </Route>
       </Routes>
     </>

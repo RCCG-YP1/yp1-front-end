@@ -7,7 +7,8 @@ const Modal = ({
   onClose,
   title,
   children,
-  // size = "xl",  (sm, md, lg, xl)
+  size = "md", // (sm, md, lg, xl),
+  theme = "dark",
 }) => {
   useEffect(() => {
     // Prevent background scrolling when modal is open
@@ -27,6 +28,12 @@ const Modal = ({
     md: "max-w-md",
     lg: "max-w-lg",
     xl: "max-w-2xl",
+    "2xl": "max-w-4xl",
+  };
+
+  const variantClasses = {
+    dark: "text-textSecondary bg-input-bg border border-input-bg",
+    light: "bg-white",
   };
 
   if (!isOpen) return null;

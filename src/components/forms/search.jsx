@@ -3,11 +3,13 @@ import SearchIcon from "@/assets/icons/search-icon";
 import classNames from "classnames";
 import LocationIcon from "@/assets/icons/location-icon";
 import CloseIcon from "@/assets/icons/close-icon";
+import { formVariantClasses } from "./select";
 
 const Search = ({
 	suggestions = [],
 	onSearch,
 	placeholder = "Search parish or location…",
+	theme = "dark",
 	otherSuggestions,
 }) => {
 	const [query, setQuery] = useState("");
@@ -73,8 +75,9 @@ const Search = ({
 		>
 			<div
 				className={classNames(
-					"flex items-center px-4 w-full bg-input-bg border border-input-bg text-textSecondary rounded-md focus-within::border-secondary",
-					isFocused && "border-secondary"
+					"flex items-center px-4 w-full rounded-md focus-within::border-secondary",
+					isFocused && "border-secondary",
+					formVariantClasses[theme]
 				)}
 			>
 				<SearchIcon />

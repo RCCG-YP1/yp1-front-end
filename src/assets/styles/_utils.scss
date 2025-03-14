@@ -1,0 +1,27 @@
+@use "sass:map";
+
+// break points - to use type mq(screen_type); e.g @include mq(desktop);
+$breakpoint: (
+	desktop: 1280px,
+	tablet: 1024px,
+	mobile: 600px,
+);
+
+// media queries - to use type mq(screen_type from _variables); e.g @include mq(desktop);
+@mixin mq($arg) {
+	$size: map-get(
+		$map: $breakpoint,
+		$key: $arg,
+	);
+
+	@media only screen and (max-width: $size) {
+		@content;
+	}
+}
+
+// alternative media queries to accept any px value ;
+@mixin media($arg) {
+	@media screen and (max-width: $arg) {
+		@content;
+	}
+}

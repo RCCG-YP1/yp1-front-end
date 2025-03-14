@@ -1,31 +1,48 @@
 import classNames from "classnames";
-import React from "react";
+import { formVariantClasses } from "./select";
 
-const Input = React.forwardRef(
-  ({ label, id, type = "text", className = "", ...props }, ref) => {
-    return (
-      <div className="mb-4">
-        {label && (
-          <label
-            htmlFor={id}
-            className="block text-sm font-medium text-white mb-1"
-          >
-            {label}
-          </label>
+const Input = ({
+  label,
+  id,
+  type = "text",
+  className = "",
+  inputClass = "",
+  theme = "dark",
+  prefix,
+  suffix,
+  ...props
+}) => {
+  return (
+    <div className={classNames("", className)}>
+      {label && (
+        <label
+          htmlFor={id}
+          className="block text-sm font-medium text-inherit mb-1 px-2"
+        >
+          {label}
+        </label>
+      )}
+
+      <div
+        className={classNames(
+          "flex items-center px-4 py-2 w-full sm:text-sm rounded-md focus-within::border-secondary h-[42px]",
+          formVariantClasses[theme]
         )}
+      >
+        {prefix}
         <input
           id={id}
-          type={type}
           className={classNames(
-            "block sm:text-sm w-full px-4 py-2 bg-input-bg border border-input-bg text-textSecondary rounded-md focus:outline-none focus:border-secondary",
-            className
+            "bg-transparent w-full h-full focus:outline-none",
+            inputClass
           )}
-          ref={ref}
+          type={type}
           {...props}
         />
+        {suffix}
       </div>
-    );
-  }
-);
+    </div>
+  );
+};
 
 export default Input;

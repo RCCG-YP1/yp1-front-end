@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row bg-background text-white">
       {/* Sidebar */}
       <div className="hidden sticky top-0 bottom-0 h-screen max-h-screen md:flex flex-col w-20 lg:w-64 bg-background border-r border-input-bg">
         <div className="flex items-center justify-center lg:justify-start p-4 lg:p-6">
