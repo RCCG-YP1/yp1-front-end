@@ -3,6 +3,7 @@ import { SearchIcon } from "@/assets/icons";
 
 export default function Province() {
   const [activeTab, setActiveTab] = useState("leadership");
+  const [activeButton, setActiveButton] = useState("zone");
   return (
     <div>
       <div>
@@ -57,10 +58,46 @@ export default function Province() {
           <div>
             <div>
               <div className="flex items-center  gap-10 my-4 text-sm">
-                <p className="bg-slate-700 rounded-xl py-1 px-2">ZONES</p>
-                <p className="bg-slate-700 rounded-xl py-1 px-2">AREAS</p>
-                <p className="bg-slate-700 rounded-xl py-1 px-2">PARISHES</p>
-                <p className="bg-slate-700 rounded-xl py-1 px-2">STANDALONES</p>
+                <p
+                  onClick={() => setActiveButton("zone")}
+                  className={`px-2 py-1 rounded-full text-sm cursor-pointer ${
+                    activeButton === "zone"
+                      ? "bg-blue-600 text-white"
+                      : "text-gray-300"
+                  }`}
+                >
+                  ZONES
+                </p>
+                <p
+                  onClick={() => setActiveButton("area")}
+                  className={`px-2 py-1 rounded-full text-sm cursor-pointer ${
+                    activeButton === "area"
+                      ? "bg-blue-600 text-white"
+                      : "text-gray-300"
+                  }`}
+                >
+                  AREAS
+                </p>
+                <p
+                  onClick={() => setActiveButton("parish")}
+                  className={`px-2 py-1 rounded-full text-sm cursor-pointer ${
+                    activeButton === "parish"
+                      ? "bg-blue-600 text-white"
+                      : "text-gray-300"
+                  }`}
+                >
+                  PARISHES
+                </p>
+                <p
+                  onClick={() => setActiveButton("standalone")}
+                  className={`px-2 py-1 rounded-full text-sm cursor-pointer ${
+                    activeButton === "standalone"
+                      ? "bg-blue-600 text-white"
+                      : "text-gray-300"
+                  }`}
+                >
+                  STANDALONES
+                </p>
               </div>
             </div>
             <div className="mt-7">
