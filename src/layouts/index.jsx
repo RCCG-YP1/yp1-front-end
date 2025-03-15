@@ -6,6 +6,10 @@ import {
 	UserIcon,
 	NewsIcon,
 } from "@/assets/icons";
+import PastorIcon from "@/assets/icons/pastor-icon";
+import DashboardIcon from "@/assets/icons/dashboard-icon";
+import InformationIcon from "@/assets/icons/information-icon";
+import MembersIcon from "@/assets/icons/members-icon";
 
 const Layout = ({ children }) => {
 	const menuItems = [
@@ -14,6 +18,11 @@ const Layout = ({ children }) => {
 		{ name: "Province", icon: <ProvinceIcon />, path: "/province" },
 		{ name: "News", icon: <NewsIcon />, path: "/news" },
 		{ name: "Profile", icon: <UserIcon />, path: "/accounts" },
+		{ name: "Pastor", icon: <PastorIcon />, path: "/pastor" },
+		{ name: "Parish", icon: <ProvinceIcon />, path: "/parish" },
+		{ name: "Dashboard", icon: <DashboardIcon />, path: "/dashboard" },
+		{ name: "Information", icon: <InformationIcon />, path: "/information" },
+		{ name: "Members", icon: <MembersIcon />, path: "/members" },
 	];
 
 	return (
