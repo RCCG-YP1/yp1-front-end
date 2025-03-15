@@ -73,7 +73,7 @@ const Layout = ({ children }) => {
       </div>
 
       {/* Main Content */}
-      <main className="flex-grow relative container pb-[100px] md:pb-[50px] max-w-4xl mx-auto py-4">
+      <main className="flex-grow relative container pb-[100px] md:pb-[50px] max-w-2xl mx-auto py-4">
         {children ? children : <Outlet />}
       </main>
     </div>
