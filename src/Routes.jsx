@@ -22,45 +22,45 @@ import Members from "./pages/members";
 import News from "./pages/news";
 
 export default function AllRoutes() {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	return (
-		<>
-			{/* fix to scroll to top automatically when page changes */}
-			<ScrollToTop />
-			<Routes>
-				<Route path="/" element={<Layout />}>
-					<Route path="/" index element={<DemoPage />} />
-					<Route path="/explore" index element={<Explore />} />
-					<Route path="/explore/:id" index element={<ParishDetails />} />
-					<Route path="/events/:id" index element={<EventDetails />} />
-					<Route path="/province" index element={<Province />} />
-					<Route path="/parish" index element={<Parish />} />
-					<Route path="/pastor" index element={<Pastor />} />
-					<Route path="/dashboard" index element={<Dashboard />} />
-					<Route path="/information" index element={<Information />} />
-					<Route path="/members" index element={<Members />} />
-					<Route path="/news" index element={<News />} />
-					<Route
-						path="/accounts"
-						index
-						element={
-							isLoggedIn ? (
-								<Profile setIsLoggedIn={setIsLoggedIn} />
-							) : (
-								<NotLoggedIn setIsLoggedIn={setIsLoggedIn} />
-							)
-						}
-					/>
-					<Route path="/profile" index element={<Profile />} />
-					<Route path="/create-account" index element={<CreateAccount />} />
-					<Route path="/sign-in" index element={<SignIn />} />
-					<Route
-						path="/personal-information"
-						index
-						element={<PersonalInformation />}
-					/>
-				</Route>
-			</Routes>
-		</>
-	);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  return (
+    <>
+      {/* fix to scroll to top automatically when page changes */}
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" index element={<DemoPage />} />
+          <Route path="/explore" index element={<Explore />} />
+          <Route path="/explore/:id" index element={<ParishDetails />} />
+          <Route path="/events/:id" index element={<EventDetails />} />
+          <Route path="/province" index element={<Province />} />
+          <Route path="/parish" index element={<Parish />} />
+          <Route path="/pastor" index element={<Pastor />} />
+          <Route path="/dashboard" index element={<Dashboard />} />
+          <Route path="/information" index element={<Information />} />
+          <Route path="/members" index element={<Members />} />
+          <Route path="/news" index element={<News />} />
+          <Route
+            path="/accounts"
+            index
+            element={
+              isLoggedIn ? (
+                <Profile setIsLoggedIn={setIsLoggedIn} />
+              ) : (
+                <NotLoggedIn setIsLoggedIn={setIsLoggedIn} />
+              )
+            }
+          />
+          <Route path="/profile" index element={<Profile />} />
+          <Route path="/create-account" index element={<CreateAccount />} />
+          <Route path="/sign-in" index element={<SignIn />} />
+          <Route
+            path="/personal-information"
+            index
+            element={<PersonalInformation />}
+          />
+        </Route>
+      </Routes>
+    </>
+  );
 }
