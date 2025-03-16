@@ -14,12 +14,11 @@ import ParishDetails from "./pages/explore/parish-details";
 import NotLoggedIn from "./pages/account";
 import Profile from "./pages/account/profile";
 import SignIn from "./pages/account/sign-in";
-import Pastor from "./pages/pastor";
-import Parish from "./pages/parish";
-import Dashboard from "./pages/dashboard";
-import Information from "./pages/information";
-import Members from "./pages/members";
-import News from "./pages/news";
+import DashboardLayout from "./layouts/dashboard-layout";
+import AdminHome from "./pages/admin";
+import AdminParishes from "./pages/admin/parish";
+import AdminMembers from "./pages/admin/members";
+import AdminPastors from "./pages/admin/pastors";
 
 export default function AllRoutes() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,12 +33,6 @@ export default function AllRoutes() {
 					<Route path="/explore/:id" index element={<ParishDetails />} />
 					<Route path="/events/:id" index element={<EventDetails />} />
 					<Route path="/province" index element={<Province />} />
-					<Route path="/parish" index element={<Parish />} />
-					<Route path="/pastor" index element={<Pastor />} />
-					<Route path="/dashboard" index element={<Dashboard />} />
-					<Route path="/information" index element={<Information />} />
-					<Route path="/members" index element={<Members />} />
-					<Route path="/news" index element={<News />} />
 					<Route
 						path="/accounts"
 						index
@@ -59,6 +52,14 @@ export default function AllRoutes() {
 						index
 						element={<PersonalInformation />}
 					/>
+
+					{/* admin */}
+				</Route>
+				<Route path="/admin" element={<DashboardLayout baseUrl="/admin" />}>
+					<Route index path="" element={<AdminHome />} />
+					<Route index path="parishes" element={<AdminParishes />} />
+					<Route index path="pastors" element={<AdminPastors />} />
+					<Route index path="members" element={<AdminMembers />} />
 				</Route>
 			</Routes>
 		</>

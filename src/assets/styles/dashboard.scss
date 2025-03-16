@@ -73,4 +73,8 @@
 		background-color: #00000091;
 		z-index: 50;
 	}
+
+	.title-sm {
+		@apply uppercase text-[10px] mb-2 font-semibold text-[#4F4F4F];
+	}
 }

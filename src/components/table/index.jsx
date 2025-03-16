@@ -12,6 +12,7 @@ const TableComponent = ({
 	itemsPerPage = 10,
 	page = 1,
 	setPage,
+	onRowClick = () => {},
 }) => {
 	const [sortBy, setSortBy] = useState(null);
 	const [sortDirection, setSortDirection] = useState("asc");
@@ -77,6 +78,7 @@ const TableComponent = ({
 								<tr
 									key={rowIndex}
 									className="hover:bg-gray-50 border-b border-[#F6F6F6] last-of-type:border-b-0"
+									onClick={() => onRowClick(row)}
 								>
 									{headCells.map(cell => (
 										<td key={cell.id} className="p-4">

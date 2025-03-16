@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Input from "@/components/forms/input";
@@ -52,7 +52,7 @@ export default function Account() {
 
 				{/* Title */}
 				<h2 className="text-lg font-semibold text-gray-300 mb-4">
-					Create your Believer's Bridge account.
+					Create your Believer&apos;s Bridge account.
 				</h2>
 				<Link to="/sign-in" className="text-sm text-secondary cursor-pointer">
 					Already have an account?

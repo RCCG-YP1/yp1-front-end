@@ -6,6 +6,7 @@ import Input from "@/components/forms/input";
 import TableComponent from "@/components/table";
 import { useState } from "react";
 import AddParishModal from "./modals/add-parish-modal";
+import ParishDetailsModal from "./modals/parish-details-modal";
 const headCells = [
 	{ id: "sn", label: "S/N", sortBy: "sn" },
 	{
@@ -27,6 +28,7 @@ const headCells = [
 export default function AdminParishes() {
 	const [page, setPage] = useState(1);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false);
 
 	const tableData = Array(10)
 		.fill({
@@ -44,7 +46,7 @@ export default function AdminParishes() {
 	return (
 		<div>
 			<h1 className="pg-title">Dashboard</h1>
-			<p className="font-light">620 praishes found</p>
+			<p className="font-light">620 parishes found</p>
 
 			<div className="mt-6 mb-2 flex justify-between items-center flex-wrap gap-4">
 				<div className="flex gap-4 items-center">
@@ -61,7 +63,6 @@ export default function AdminParishes() {
 					</Button>
 				</div>
 				<Button onClick={() => setIsModalOpen(true)} color="black">
-					{" "}
 					+ Add Parish
 				</Button>
 			</div>
@@ -80,6 +81,7 @@ export default function AdminParishes() {
 				))}
 			</div>
 			<TableComponent
+				onRowClick={() => setIsModalDetailsOpen(true)}
 				headCells={headCells}
 				tableData={tableData}
 				showPagination
@@ -95,6 +97,10 @@ export default function AdminParishes() {
 			/>
 
 			<AddParishModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+			<ParishDetailsModal
+				isModalOpen={isModalDetailsOpen}
+				setIsModalOpen={setIsModalDetailsOpen}
+			/>
 		</div>
 	);
 }

@@ -27,6 +27,7 @@ export default {
 				background: "#161616",
 				"input-bg": "#3D3D3D",
 				textSecondary: "#E7E7E7",
+				bgSecondary: "#F6F6F6",
 				borderColor: "#2E2E2E",
 			},
 			fontFamily: {

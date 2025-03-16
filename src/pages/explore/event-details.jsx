@@ -16,6 +16,7 @@ const MOCK_EVENT = {
 	description:
 		"Celebrating 3 years of divine increase and God’s faithfulness in RCCG The Bridge…",
 };
+
 export default function EventDetails() {
 	const [event] = useState(MOCK_EVENT);
 

@@ -9,10 +9,7 @@ $breakpoint: (
 
 // media queries - to use type mq(screen_type from _variables); e.g @include mq(desktop);
 @mixin mq($arg) {
-	$size: map-get(
-		$map: $breakpoint,
-		$key: $arg,
-	);
+	$size: map.get($breakpoint, $arg);
 
 	@media only screen and (max-width: $size) {
 		@content;
