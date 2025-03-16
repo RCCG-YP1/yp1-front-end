@@ -19,6 +19,7 @@ import AdminHome from "./pages/admin";
 import AdminParishes from "./pages/admin/parish";
 import AdminMembers from "./pages/admin/members";
 import AdminPastors from "./pages/admin/pastors";
+import News from "./pages/news";
 
 export default function AllRoutes() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -33,6 +34,7 @@ export default function AllRoutes() {
 					<Route path="/explore/:id" index element={<ParishDetails />} />
 					<Route path="/events/:id" index element={<EventDetails />} />
 					<Route path="/province" index element={<Province />} />
+					<Route path="/news" index element={<News />} />
 					<Route
 						path="/accounts"
 						index
