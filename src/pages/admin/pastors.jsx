@@ -5,8 +5,8 @@ import Chip from "@/components/chip";
 import Input from "@/components/forms/input";
 import TableComponent from "@/components/table";
 import { useState } from "react";
-import AddParishModal from "./modals/add-parish-modal";
-import ParishDetailsModal from "./modals/parish-details-modal";
+import AddPastorModal from "@/modals/AddParishModal";
+import PastorModal from "./modals/pastor-details-modal";
 const headCells = [
 	{
 		id: "name",
@@ -94,8 +94,8 @@ export default function AdminPastors() {
 				}}
 			/>
 
-			<AddParishModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-			<ParishDetailsModal
+			<AddPastorModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+			<PastorModal
 				isModalOpen={isModalDetailsOpen}
 				setIsModalOpen={setIsModalDetailsOpen}
 			/>

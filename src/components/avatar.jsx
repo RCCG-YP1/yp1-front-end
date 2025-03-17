@@ -35,6 +35,12 @@ const Avatar = ({
 
 	return (
 		<div
+			style={
+				!sizeClasses[size] && {
+					width: size,
+					height: size,
+				}
+			}
 			className={classNames(
 				baseClasses,
 				sizeClasses[size],
