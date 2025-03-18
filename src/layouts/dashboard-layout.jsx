@@ -34,7 +34,7 @@ const LINKS = [
 	},
 	{
 		name: "Events",
-		link: "/admin/admins",
+		link: "/admin/events",
 		icon: <EventIcon color="currentColor" />,
 	},
 	{

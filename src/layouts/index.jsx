@@ -6,7 +6,6 @@ import {
 	UserIcon,
 	NewsIcon,
 } from "@/assets/icons";
-import PastorIcon from "@/assets/icons/pastor-icon";
 
 const Layout = ({ children }) => {
 	const menuItems = [
@@ -15,14 +14,13 @@ const Layout = ({ children }) => {
 		{ name: "Province", icon: <ProvinceIcon />, path: "/province" },
 		{ name: "News", icon: <NewsIcon />, path: "/news" },
 		{ name: "Profile", icon: <UserIcon />, path: "/accounts" },
-		{ name: "Pastor", icon: <PastorIcon />, path: "/pastor" },
 	];
 
 	return (
 		<div className="flex flex-col md:flex-row bg-background text-white">
 			{/* Sidebar */}
 			<div className="hidden sticky top-0 bottom-0 h-screen max-h-screen md:flex flex-col w-20 lg:w-64 bg-background border-r border-input-bg">
-				<div className="flex items-center justify-center lg:justify-start p-4 lg:p-6">
+				<div className="flex items-center justify-center lg:justify-start py-4 lg:p-6">
 					<img src="/images/logo.png" alt="rccg youth province 1 logo" />
 				</div>
 				<nav className="flex-grow">
@@ -31,7 +29,7 @@ const Layout = ({ children }) => {
 							key={item.name}
 							to={item.path}
 							className={({ isActive }) =>
-								`flex items-center px-4 py-3 lg:px-6 lg:py-4 ${
+								`flex items-center px-4 py-3 justify-center lg:justify-start lg:px-6 lg:py-4 ${
 									isActive ? "text-secondary" : "text-white hover:bg-input-bg"
 								}`
 							}
@@ -66,7 +64,7 @@ const Layout = ({ children }) => {
 			</div>
 
 			{/* Main Content */}
-			<main className="flex-grow relative container pb-[100px] md:pb-[50px] max-w-2xl mx-auto py-4">
+			<main className="flex-grow relative container pb-[100px] md:pb-[50px] max-w-2xl mx-auto py-4 min-h-screen">
 				{children ? children : <Outlet />}
 			</main>
 		</div>
