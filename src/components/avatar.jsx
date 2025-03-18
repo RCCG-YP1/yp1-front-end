@@ -32,14 +32,15 @@ const Avatar = ({
 
 	const baseClasses =
 		"flex items-center justify-center bg-gray-200 text-gray-600 font-bold";
-
 	return (
 		<div
 			style={
-				!sizeClasses[size] && {
-					width: size,
-					height: size,
-				}
+				!sizeClasses[size]
+					? {
+							width: size,
+							height: size,
+					  }
+					: {}
 			}
 			className={classNames(
 				baseClasses,

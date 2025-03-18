@@ -5,8 +5,8 @@ import Chip from "@/components/chip";
 import Input from "@/components/forms/input";
 import TableComponent from "@/components/table";
 import { useState } from "react";
-import AddPastorModal from "@/modals/AddParishModal";
 import PastorModal from "./modals/pastor-details-modal";
+import AddPastorModal from "./modals/add-pastor-modal";
 const headCells = [
 	{
 		id: "name",
