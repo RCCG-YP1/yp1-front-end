@@ -33,7 +33,9 @@ export default function News() {
                 className="p-4  rounded-md shadow-lg bg-gray-600 "
               >
                 <h3 className="text-lg font-semibold">{newItem.title}</h3>
-                <p className="text-gray-200">{newItem.body}</p>
+                <p className="text-gray-200">
+                  {newItem.body.substring(0, 70) + "..."}
+                </p>
               </div>
             ))
           ) : (
