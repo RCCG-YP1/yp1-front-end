@@ -121,7 +121,7 @@ export default function Province() {
     (parish) => parish.category.toLowerCase() === activeButton
   );
   return (
-    <div className="lg:w-[770px] h-screen lg:h-full">
+    <div className="lg:w-[770px]">
       <div>
         <div className="text-right lg:mt-16 mt-5 lg:space-x-6">
           <button
