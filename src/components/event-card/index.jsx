@@ -9,7 +9,7 @@ const MOCK_EVENT = {
 };
 export default function EventCard({ event = MOCK_EVENT }) {
 	return (
-		<Link to={`/events/${event.id}`} className="w-full">
+		<Link to={`/explore/events/${event.id}`} className="w-full">
 			<div className="aspect-video rounded-lg">
 				<img
 					className="w-full h-full object-cover rounded-lg"

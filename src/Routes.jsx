@@ -1,11 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
-
 import ScrollToTop from "@/components/scrollToTop";
-import DemoPage from "./pages/component-demo";
 import Explore from "./pages/explore";
 import Province from "./pages/province";
-
 import CreateAccount from "./pages/account/create-account";
 import PersonalInformation from "./pages/account/personal-information";
 import Layout from "./layouts";
@@ -21,6 +18,7 @@ import AdminMembers from "./pages/admin/members";
 import AdminPastors from "./pages/admin/pastors";
 import News from "./pages/news";
 import AdminInformation from "./pages/admin/information";
+import Home from "./pages";
 
 export default function AllRoutes() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,10 +28,10 @@ export default function AllRoutes() {
 			<ScrollToTop />
 			<Routes>
 				<Route path="/" element={<Layout />}>
-					<Route path="/" index element={<DemoPage />} />
+					<Route path="/" index element={<Home />} />
 					<Route path="/explore" index element={<Explore />} />
 					<Route path="/explore/:id" index element={<ParishDetails />} />
-					<Route path="/events/:id" index element={<EventDetails />} />
+					<Route path="/explore/events/:id" index element={<EventDetails />} />
 					<Route path="/province" index element={<Province />} />
 					<Route path="/news" index element={<News />} />
 					<Route
