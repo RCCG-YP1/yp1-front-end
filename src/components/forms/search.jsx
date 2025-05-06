@@ -16,6 +16,7 @@ const Search = ({
 	const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 	const [showSuggestions, setShowSuggestions] = useState(false);
 	const [isFocused, setIsFocused] = useState(false);
+	const [selectedIndex, setSelectedIndex] = useState(-1);
 	const searchRef = useRef(null);
 
 	// Handle input change to filter suggestions
@@ -64,6 +65,42 @@ const Search = ({
 		};
 	}, []);
 
+	const handleKeyDown = (e) => {
+		if (!showSuggestions) return;
+
+		switch (e.key) {
+			case "ArrowDown":
+				e.preventDefault();
+				setSelectedIndex(prevIndex => 
+					prevIndex < filteredSuggestions.length - 1 ? prevIndex + 1 : 0
+				);
+				break;
+			case "ArrowUp":
+				e.preventDefault();
+				setSelectedIndex(prevIndex => 
+					prevIndex > 0 ? prevIndex - 1 : filteredSuggestions.length - 1
+				);
+				break;
+			case "Enter":
+				e.preventDefault();
+				if (selectedIndex >= 0) {
+					handleSuggestionClick(filteredSuggestions[selectedIndex]);
+				}
+				break;
+			case "Escape":
+				setShowSuggestions(false);
+				setSelectedIndex(-1);
+				break;
+			default:
+				break;
+		}
+	};
+
+	// Reset selected index when suggestions change
+	useEffect(() => {
+		setSelectedIndex(-1);
+	}, [filteredSuggestions]);
+
 	return (
 		<form
 			onSubmit={e => {
@@ -71,10 +108,9 @@ const Search = ({
 				onSearch(query);
 			}}
 			className="relative w-full my-2"
-			ref={searchRef} // Attach the ref to the component
+			ref={searchRef}
 		>
-			<div
-				className={classNames(
+			<div className={classNames(
 					"flex items-center px-4 w-full rounded-md focus-within::border-secondary",
 					isFocused && "border-secondary",
 					formVariantClasses[theme]
@@ -86,6 +122,7 @@ const Search = ({
 					value={query}
 					onChange={handleInputChange}
 					onFocus={handleFocus}
+					onKeyDown={handleKeyDown}
 					placeholder={placeholder}
 					className="bg-transparent w-full px-4 h-full py-2 focus:outline-none"
 				/>
@@ -111,9 +148,13 @@ const Search = ({
 								key={index}
 								onClick={() => handleSuggestionClick(suggestion)}
 								onMouseDown={() => handleSuggestionClick(suggestion)}
-								className="px-4 py-2 cursor-pointer hover:bg flex gap-2 items-center hover:bg-input-bg"
+								className={classNames(
+									"px-4 py-2 cursor-pointer hover:bg flex gap-2 items-center hover:bg-input-bg",
+									selectedIndex === index && "bg-input-bg"
+								)}
 							>
-								<LocationIcon className="text-secondary" /> <span>{suggestion}</span>
+								<LocationIcon className="text-secondary" />
+								<span>{suggestion}</span>
 							</li>
 						))
 					) : (
