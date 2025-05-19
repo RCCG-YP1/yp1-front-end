@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { forwardRef } from "react";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const formVariantClasses = {
@@ -7,7 +8,7 @@ export const formVariantClasses = {
 	outlinedLight: "border-[#F6F6F6] border text-[#4F4F4F]",
 };
 
-const Select = ({
+const Select = forwardRef(({
 	label,
 	id,
 	options = [],
@@ -16,7 +17,7 @@ const Select = ({
 	theme = "dark",
 	placeholder,
 	...props
-}) => {
+}, ref) => {
 	return (
 		<div className={classNames("", className)}>
 			{label && (
@@ -29,6 +30,7 @@ const Select = ({
 			)}
 			<select
 				id={id}
+				ref={ref}
 				className={classNames(
 					"block sm:text-sm w-full px-4 py-2 rounded-md focus:outline-none focus:border-secondary h-[42px]",
 					formVariantClasses[theme],
@@ -49,6 +51,8 @@ const Select = ({
 			</select>
 		</div>
 	);
-};
+});
+
+Select.displayName = 'Select';
 
 export default Select;

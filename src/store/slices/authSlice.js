@@ -10,11 +10,13 @@ const authSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
-		setCredentials: (state, { payload: { user, token } }) => {
+		setUserData: (state, { payload: user }) => {
 			state.user = user;
+			state.isAuthenticated = true;
+		},
+		setUserToken: (state, { payload: token }) => {
 			state.token = token;
 			state.isAuthenticated = true;
-			localStorage.setItem("token", token);
 		},
 		logout: state => {
 			state.user = null;
@@ -25,5 +27,8 @@ const authSlice = createSlice({
 	},
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setUserData, logout, setUserToken } = authSlice.actions;
+// selector to select user details from the store
+export const selectCurrentUser = state => state.auth.user;
+export const selectToken = state => state.auth.token;
 export default authSlice.reducer;

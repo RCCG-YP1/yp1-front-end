@@ -16,6 +16,7 @@ const Avatar = ({
 	size = "md",
 	variant = "circular",
 	fallback, // string || icon
+	className,
 }) => {
 	const sizeClasses = {
 		sm: "w-8 h-8 text-sm",
@@ -46,7 +47,8 @@ const Avatar = ({
 				baseClasses,
 				sizeClasses[size],
 				variantClasses[variant],
-				!src && "bg-gray-300"
+				!src && "bg-gray-300",
+				className
 			)}
 		>
 			{src ? (

@@ -3,7 +3,10 @@ import Button from "@/components/button";
 import ControlledInput from "@/components/forms/controlled-input";
 import ControlledSelect from "@/components/forms/controlled-select";
 import Modal from "@/components/modal";
+import { useAddParishMutation } from "@/services/admin.api";
+import { Loader2 } from "lucide-react";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const media_fields = [
 	"YouTube",
@@ -15,11 +18,29 @@ const media_fields = [
 ];
 export default function AddParishModal({ isModalOpen, setIsModalOpen }) {
 	const methods = useForm();
+	const [addParish, { isLoading }] = useAddParishMutation();
+
 	const onSubmit = async body => {
 		try {
-			console.log(body);
+			const formData = new FormData();
+
+			if (body.profile_picture?.[0]) {
+				formData.append("profile_picture", body.profile_picture[0]);
+			}
+			Object.entries(body).forEach(([key, value]) => {
+				if (key === "profile_picture") return;
+				if (value) {
+					formData.append(key, value);
+				}
+			});
+			const res = await addParish(formData);
+			if (res?.data?.success) {
+				methods.reset();
+				toast.success("Parish added successfully");
+				setIsModalOpen(false);
+			}
 		} catch (error) {
-			console.log(error);
+			toast.error(error.message || "Failed to add pastor");
 		}
 	};
 
@@ -143,7 +164,8 @@ export default function AddParishModal({ isModalOpen, setIsModalOpen }) {
 							Cancel
 						</Button>
 						<Button type="submit" color="secondary">
-							<SaveIcon /> Save Parish
+							{isLoading ? <Loader2 className="animate-spin" /> : <SaveIcon />}Save
+							Parish
 						</Button>
 					</div>
 				</form>

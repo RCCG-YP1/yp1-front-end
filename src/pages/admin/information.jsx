@@ -1,34 +1,34 @@
-import { ProvinceIcon, SearchIcon } from "@/assets/icons";
+import { NewsIcon, SearchIcon } from "@/assets/icons";
 import FilterIcon from "@/assets/icons/filter-icon";
 import Button from "@/components/button";
 import Input from "@/components/forms/input";
 import TableComponent from "@/components/table";
 import { useState } from "react";
-import { truncateStr } from "@/utils";
 import AddUpdateModal from "./modals/add-update-modal";
+import { useGetAdminInformationQuery } from "@/services/admin.api";
+import { truncateStr } from "@/utils";
+import { format } from "date-fns";
+import { Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 const headCells = [
 	{
-		id: "date",
-		label: "Date",
+		id: "created_at",
+		label: "Date Created",
 		sortBy: "name",
 	},
-	{ id: "content", label: "Update" },
+	{ id: "title", label: "Title" },
+	{ id: "actions", label: "Actions" },
 ];
 
 export default function AdminInformation() {
 	const [page, setPage] = useState(1);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	const tableData = Array(10)
-		.fill({
-			date: "13/01/2025",
-			content: truncateStr(
-				"Sidebar has been collecting the best design links of the day since October 2012. It's maintained by",
-				100
-			),
-		})
-		.map((el, i) => ({ sn: i + 1, ...el }));
-
+	const { data, isLoading, error, isError } = useGetAdminInformationQuery();
 	return (
 		<div>
 			<h1 className="pg-title">Information Center</h1>
@@ -54,16 +54,45 @@ export default function AdminInformation() {
 
 			<TableComponent
 				headCells={headCells}
-				tableData={tableData}
+				tableData={data?.informations.data.map(el => ({
+					created_at: format(el.created_at, "MMM dd, yyyy"),
+					title: truncateStr(el.title, 100),
+					actions: (
+						<>
+							<DropdownMenu modal={false}>
+								<button className="h-8 w-8 p-0">
+									<DropdownMenuTrigger>
+										<span className="sr-only">Open menu</span>
+										<MoreHorizontal />
+									</DropdownMenuTrigger>
+								</button>
+								<DropdownMenuContent align="end">
+									<DropdownMenuItem className={""}>
+										<Eye /> View
+									</DropdownMenuItem>
+									<DropdownMenuItem className={""}>
+										<Pencil /> Edit
+									</DropdownMenuItem>
+									<DropdownMenuItem className={"!text-red-500"}>
+										<Trash2 /> Delete
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</>
+					),
+				}))}
 				showPagination
 				totalItems={50}
+				isLoading={isLoading}
+				isError={isError}
+				error={error}
 				itemsPerPage={10}
 				page={page}
 				setPage={setPage}
 				emptyStateProps={{
 					title: "No Data Found",
 					subTitle: "Try adjusting your filters or adding new data.",
-					icon: <ProvinceIcon />,
+					icon: <NewsIcon />,
 				}}
 			/>
 

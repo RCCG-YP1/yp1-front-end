@@ -1,22 +1,31 @@
 import LogOut from "@/assets/icons/log-out-icon";
-export default function Profile({ setIsLoggedIn }) {
-	const user = {
-		name: "Victory Moks",
-		username: "elmoks",
-		email: "vikmoks01@gmail.com",
-		birthday: "06 September",
-		status: "Worker",
-		parish: "RCCG LSC The Bridge",
-		location: "Redemption Camp",
-	};
+import Avatar from "@/components/avatar";
+import SuspenseContainer from "@/components/custom-suspense";
+import { useConfirmations } from "@/providers/ConfirmationsProvider";
+import { useGetLoggedInUserDetailQuery } from "@/services/api";
+import { logout } from "@/store/slices/authSlice";
+import { format } from "date-fns";
+import { useDispatch } from "react-redux";
+export default function Profile() {
+	const { data, isLoading, isError, error } = useGetLoggedInUserDetailQuery();
+	const user = data?.user;
+	const dispatch = useDispatch();
+	const confirm = useConfirmations();
 	return (
-		<div className="min-h-screen ">
+		<SuspenseContainer
+			isLoading={isLoading}
+			error={error}
+			isError={isError}
+			className="min-h-screen"
+		>
 			<div className="mt-14">
 				<div className="flex items-center gap-4 mb-6">
-					<img src="/images/Rectangle 12.png" alt="" />
+					<Avatar alt={user?.firstName + " " + user?.lastName} variant="rounded" />
 					<div>
-						<h2 className="text-xl font-bold text-gray-300">{user.name}</h2>
-						<p className="text-secondary text-sm">@{user.username}</p>
+						<h2 className="text-xl font-bold text-gray-300">
+							{user?.firstName + " " + user?.lastName}
+						</h2>
+						<p className="text-secondary text-sm">@{user?.userName}</p>
 					</div>
 				</div>
 
@@ -27,23 +36,25 @@ export default function Profile({ setIsLoggedIn }) {
 					<ul className="mt-3 space-y-6 ml-3">
 						<li>
 							<span className="text-sm text-gray-400">Email address:</span>
-							<p className="text-secondary">{user.email}</p>
+							<p className="text-secondary">{user?.email}</p>
 						</li>
 						<li>
 							<span className="text-sm text-gray-400">Birthday:</span>
-							<p className="text-secondary">{user.birthday}</p>
+							<p className="text-secondary">
+								{user?.dateOfBirth ? format(user?.dateOfBirth, "do MMMM") : "N/A"}
+							</p>
 						</li>
 						<li>
 							<span className="text-sm text-gray-400">Status:</span>
-							<p className="text-secondary">{user.status}</p>
+							<p className="text-secondary">{user?.status}</p>
 						</li>
 						<li>
 							<span className="text-sm text-gray-400">Parish:</span>
-							<p className="text-secondary">{user.parish}</p>
+							<p className="text-secondary">{user?.parish || "N/A"}</p>
 						</li>
 						<li>
 							<span className="text-sm text-gray-400">Location:</span>
-							<p className="text-secondary">{user.location}</p>
+							<p className="text-secondary">{user?.location || "N/A"}</p>
 						</li>
 					</ul>
 				</div>
@@ -57,16 +68,18 @@ export default function Profile({ setIsLoggedIn }) {
 					</ul>
 				</div>
 
-				<div
-					onClick={() => {
-						setIsLoggedIn(false);
+				<button
+					onClick={async () => {
+						if (await confirm("Are you sure you want to logout?")) {
+							dispatch(logout());
+						}
 					}}
 					className="flex items-center gap-2 mt-12 text-red-500 hover:text-red-600 cursor-pointer ml-3"
 				>
 					<LogOut />
-					<button>Log out</button>
-				</div>
+					<p>Log out</p>
+				</button>
 			</div>
-		</div>
+		</SuspenseContainer>
 	);
 }
