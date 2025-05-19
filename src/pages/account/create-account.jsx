@@ -1,19 +1,20 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import Input from "@/components/forms/input";
 import BackBtn from "@/components/back-btn";
 import Button from "@/components/button/index";
 import GoogleIcon from "@/assets/icons/google-icon";
-import { registerApi } from "@/api/registerApi";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { setUserData, setUserToken } from "@/store/slices/authSlice";
+import ControlledInput from "@/components/forms/controlled-input";
+import classNames from "classnames";
+import { useRegisterMutation } from "@/services/auth.api";
+import { handleApiError } from "@/utils/error-handler";
 
 export default function Account() {
-	const {
-		register,
-		handleSubmit,
-		watch,
-		formState: { errors },
-	} = useForm();
+	const methods = useForm();
+	const { handleSubmit, watch } = methods;
 
 	const [showPassword, setShowPassword] = useState(false);
 	const [inputType, setInputType] = useState("text");
@@ -22,18 +23,23 @@ export default function Account() {
 		setShowPassword(prev => !prev);
 	};
 
-	const onSubmit = async data => {
-		const formDataObject = new FormData();
-		Object.keys(data).forEach(key => {
-			formDataObject.append(key, data[key]);
-		});
+	const dispatch = useDispatch();
 
+	const [registerApi, { isLoading }] = useRegisterMutation();
+
+	const onSubmit = async data => {
 		try {
-			const response = await registerApi(formDataObject);
-			alert("Registration successful!");
-			console.log(response);
+			const result = await registerApi(data).unwrap();
+			if (result.success) {
+				dispatch(setUserToken(result?.auth_token));
+				dispatch(setUserData(result?.user));
+				toast.success(result?.message);
+				window.location.href = "/accounts";
+			} else {
+				toast.error(result.message);
+			}
 		} catch (error) {
-			alert("Registration failed");
+			handleApiError(error);
 		}
 	};
 
@@ -59,130 +65,87 @@ export default function Account() {
 				</Link>
 
 				{/* Form */}
-				<form className="mt-11" onSubmit={handleSubmit(onSubmit)}>
-					{/* Email */}
-					<div className="mb-4">
-						<Input
-							{...register("email", { required: "Email is required" })}
+				<FormProvider {...methods}>
+					<form className="mt-11 space-y-4" onSubmit={handleSubmit(onSubmit)}>
+						{/* Email */}
+						<ControlledInput
 							placeholder="Email address"
 							className="text-[13px]"
+							name="email"
 						/>
-						{errors.email && (
-							<p className="text-red-500 text-xs">{errors.email.message}</p>
-						)}
-					</div>
-
-					{/* Password */}
-					<div className="mb-4 relative">
-						<Input
-							{...register("password", {
-								required: "Password is required",
-								minLength: 8,
-							})}
-							type={showPassword ? "text" : "password"}
+						<ControlledInput
 							placeholder="Create password"
 							className="text-[13px]"
+							name="password"
+							rules={{
+								minLength: 8,
+							}}
+							suffix={
+								<button
+									type="button"
+									onClick={togglePasswordVisibility}
+									className={classNames("!text-[10px] !p-0")}
+								>
+									{showPassword ? "HIDE" : "SHOW"}
+								</button>
+							}
 						/>
-						<button
-							type="button"
-							onClick={togglePasswordVisibility}
-							className="absolute inset-y-0 right-2 text-[10px] text-gray-300"
-						>
-							{showPassword ? "HIDE" : "SHOW"}
-						</button>
-						{errors.password && (
-							<p className="text-red-500 text-xs">{errors.password.message}</p>
-						)}
-					</div>
-
-					{/* Confirm Password */}
-					<div className="mb-4">
-						<Input
-							{...register("confirmPassword", {
-								validate: value =>
-									value === watch("password") || "Passwords do not match",
-							})}
-							type="password"
+						<ControlledInput
 							placeholder="Confirm password"
 							className="text-[13px]"
+							name="confirmPassword"
+							rules={{
+								minLength: 8,
+								validate: value =>
+									value === watch("password") || "Passwords do not match",
+							}}
+							suffix={
+								<button
+									type="button"
+									onClick={togglePasswordVisibility}
+									className={classNames("!text-[10px] !p-0")}
+								>
+									{showPassword ? "HIDE" : "SHOW"}
+								</button>
+							}
 						/>
-						{errors.confirmPassword && (
-							<p className="text-red-500 text-xs">{errors.confirmPassword.message}</p>
-						)}
-					</div>
 
-					{/* First Name */}
-					<div className="mb-4">
-						<Input
-							{...register("firstName", { required: "First name is required" })}
+						<ControlledInput
 							placeholder="First name"
 							className="text-[13px]"
+							name="firstName"
 						/>
-						{errors.firstName && (
-							<p className="text-red-500 text-xs">{errors.firstName.message}</p>
-						)}
-					</div>
-
-					{/* Last Name */}
-					<div className="mb-4">
-						<Input
-							{...register("lastName", { required: "Last name is required" })}
+						<ControlledInput
 							placeholder="Last name"
 							className="text-[13px]"
+							name="lastName"
 						/>
-						{errors.lastName && (
-							<p className="text-red-500 text-xs">{errors.lastName.message}</p>
-						)}
-					</div>
-
-					{/* Username */}
-					<div className="mb-4">
-						<Input
-							{...register("userName", { required: "Username is required" })}
+						<ControlledInput
 							placeholder="Username"
 							className="text-[13px]"
+							name="userName"
 						/>
-						{errors.userName && (
-							<p className="text-red-500 text-xs">{errors.userName.message}</p>
-						)}
-					</div>
-
-					{/* Birthday */}
-					<div className="mb-4">
-						<Input
-							{...register("dateOfBirth", {
-								required: "Date of birth is required",
-							})}
-							type={inputType}
+						<ControlledInput
 							placeholder="Birthday"
-							onFocus={() => setInputType("date")}
 							className="text-[13px]"
+							name="dateOfBirth"
+							type={inputType}
+							onFocus={() => setInputType("date")}
 						/>
-						{errors.dateOfBirth && (
-							<p className="text-red-500 text-xs">{errors.dateOfBirth.message}</p>
-						)}
-					</div>
 
-					{/* Phone Number */}
-					<div className="mb-4">
-						<Input
-							{...register("phoneNumber", {
-								required: "Phone number is required",
-							})}
+						<ControlledInput
 							placeholder="Phone number"
-							type="number"
+							type="tel"
 							className="text-[13px] appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
+							name="phoneNumber"
 						/>
-						{errors.phoneNumber && (
-							<p className="text-red-500 text-xs">{errors.phoneNumber.message}</p>
-						)}
-					</div>
 
-					{/* Submit Button */}
-					<Button type="submit" className="w-full mt-10">
-						Create my account
-					</Button>
-				</form>
+						{/* Submit Button */}
+						<Button type="submit" className="w-full mt-10">
+							{isLoading ? "Creating account..." : "Create my account"}
+						</Button>
+					</form>
+				</FormProvider>
 
 				{/* Or Divider */}
 				<div className="flex items-center my-4">

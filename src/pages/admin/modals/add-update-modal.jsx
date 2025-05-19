@@ -1,41 +1,49 @@
 import SendIcon from "@/assets/icons/send-icon";
 import Button from "@/components/button";
 import Input from "@/components/forms/input";
+import FileInput from "@/components/forms/file-input";
 import Modal from "@/components/modal";
 import { useState } from "react";
 
 import QuillEditor from "@/components/QuillEditor";
+import { toast } from "sonner";
+import Avatar from "@/components/avatar";
+import { useAddInformationMutation } from "@/services/admin.api";
+import { Loader2 } from "lucide-react";
+import { handleApiError } from "@/utils/error-handler";
 
 export default function AddUpdateModal({ isModalOpen, setIsModalOpen }) {
 	const [title, setTitle] = useState("");
+	const [image, setImage] = useState();
 	const [editorState, setEditorState] = useState("");
-	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [error, setError] = useState(null);
 
+	const [addInformation, { isLoading }] = useAddInformationMutation();
 	const handleSubmit = async e => {
 		e.preventDefault();
-		setIsSubmitting(true);
-		setError(null);
 
 		try {
 			const payload = {
 				title: title.trim(),
-				content: editorState, // This will be the serialized HTML from Lexical
+				body: editorState,
+				image,
 			};
-
-			console.log(payload);
+			const formData = new FormData();
+			Object.entries(payload).forEach(([key, value]) => {
+				if (value) {
+					formData.append(key, value);
+				}
+			});
 			// Construct payload with title and content
-
-			// setIsModalOpen(false);
-			// setTitle("");
-			// setEditorState(null);
+			const res = await addInformation(formData).unwrap();
+			toast.success(res?.message);
+			setIsModalOpen(false);
+			setImage(undefined);
+			setTitle("");
+			setEditorState(null);
 		} catch (err) {
-			setError(err.message);
-		} finally {
-			setIsSubmitting(false);
+			handleApiError(err);
 		}
 	};
-
 	return (
 		<Modal
 			isOpen={isModalOpen}
@@ -45,8 +53,21 @@ export default function AddUpdateModal({ isModalOpen, setIsModalOpen }) {
 			size="2xl"
 		>
 			<form onSubmit={handleSubmit} className="space-y-6">
-				{error && <div className="text-red-500 text-sm">{error}</div>}
-
+				<div className="flex flex-wrap border rounded p-2 items-center gap-4">
+					<FileInput
+						className="w-auto"
+						theme="light"
+						btnTitle={image ? "Change Image" : "Choose Image"}
+						required={false}
+						onChange={e => setImage(e.target.files[0])}
+					/>
+					{image && (
+						<div className="flex gap-2 items-center">
+							<Avatar variant="rounded" src={URL.createObjectURL(image)} />
+							<p>{image?.name}</p>
+						</div>
+					)}
+				</div>
 				<Input
 					label="Subject"
 					placeholder="Post title"
@@ -66,12 +87,13 @@ export default function AddUpdateModal({ isModalOpen, setIsModalOpen }) {
 						type="button"
 						color="black"
 						onClick={() => setIsModalOpen(false)}
-						disabled={isSubmitting}
+						disabled={isLoading}
 					>
 						Cancel
 					</Button>
-					<Button type="submit" color="secondary" disabled={isSubmitting}>
-						<SendIcon /> {isSubmitting ? "Sending..." : "Send post"}
+					<Button type="submit" color="secondary" disabled={isLoading}>
+						{isLoading ? <Loader2 className="animate-spin" /> : <SendIcon />} Send
+						post
 					</Button>
 				</div>
 			</form>

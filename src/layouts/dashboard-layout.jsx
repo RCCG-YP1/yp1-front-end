@@ -10,6 +10,10 @@ import EventIcon from "@/assets/icons/event-icon";
 import SettingsIcon from "@/assets/icons/settings-icon";
 import MembersIcon from "@/assets/icons/members-icon";
 import HamburgerIcon from "@/assets/icons/hamburger-icon";
+import { useDispatch } from "react-redux";
+import { useConfirmations } from "@/providers/ConfirmationsProvider";
+import { logout } from "@/store/slices/authSlice";
+import { LogOut } from "lucide-react";
 
 const LINKS = [
 	{
@@ -52,6 +56,8 @@ const LINKS = [
 export default function DashboardLayout({ baseUrl = "/dashboard" }) {
 	const [isSideBarOpen, setisSideBarOpen] = useState(false);
 
+	const dispatch = useDispatch();
+	const confirm = useConfirmations();
 	return (
 		<div className="lsc-dashboard">
 			{isSideBarOpen && (
@@ -92,6 +98,22 @@ export default function DashboardLayout({ baseUrl = "/dashboard" }) {
 									</CustomLink>
 								</li>
 							))}
+
+							<li>
+								<button
+									onClick={async () => {
+										if (
+											await confirm("Are you sure you want to logout?", { theme: "light" })
+										) {
+											dispatch(logout());
+										}
+									}}
+									className="sidebar-item text-white hover:bg-secondary-900"
+								>
+									<LogOut />
+									<p>Log out</p>
+								</button>
+							</li>
 						</ul>
 					</div>
 				</div>

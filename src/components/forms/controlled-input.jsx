@@ -59,7 +59,7 @@ const ControlledInput = ({
 				suffix={props.suffix}
 			/>
 			{error && showError && (
-				<div className={"text-[#f50505] text-sm text-left w-full mt-2"}>
+				<div className={"text-[#fb4141] text-sm text-left w-full mt-2"}>
 					{error.message || errMsg}
 				</div>
 			)}

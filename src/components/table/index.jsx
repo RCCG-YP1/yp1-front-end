@@ -2,6 +2,9 @@ import { useState, useMemo } from "react";
 import Select from "../forms/select";
 import SortIcon from "@/assets/icons/sort-icon";
 import classNames from "classnames";
+import ErrorMsg from "../error-msg";
+import EmptyState from "../empty-state";
+import { Braces } from "lucide-react";
 
 const TableComponent = ({
 	headCells,
@@ -13,6 +16,9 @@ const TableComponent = ({
 	page = 1,
 	setPage,
 	onRowClick = () => {},
+	isLoading = false,
+	isError,
+	error,
 }) => {
 	const [sortBy, setSortBy] = useState(null);
 	const [sortDirection, setSortDirection] = useState("asc");
@@ -41,6 +47,27 @@ const TableComponent = ({
 		{ length: Math.ceil(totalItems / itemsPerPage) },
 		(_, i) => i + 1
 	);
+	const renderSkeletonRows = () => {
+		return Array(itemsPerPage)
+			.fill(0)
+			.map((_, index) => (
+				<tr
+					key={`skeleton_${index}`}
+					className="animate-pulse border-b border-[#F6F6F6] last-of-type:border-b-0"
+				>
+					{headCells.map(cell => (
+						<td key={cell.id} className="p-4">
+							<div className="h-4 bg-gray-200 rounded w-[80%]"></div>
+						</td>
+					))}
+				</tr>
+			));
+	};
+
+	if (isError) {
+		return <ErrorMsg error={error} />;
+	}
+
 	return (
 		<div>
 			<div className="overflow-x-auto w-full">
@@ -73,7 +100,9 @@ const TableComponent = ({
 						</tr>
 					</thead>
 					<tbody>
-						{sortedData.length > 0 ? (
+						{isLoading ? (
+							renderSkeletonRows()
+						) : sortedData.length > 0 ? (
 							sortedData.map((row, rowIndex) => (
 								<tr
 									key={rowIndex}
@@ -90,10 +119,12 @@ const TableComponent = ({
 						) : (
 							<tr>
 								<td colSpan={headCells.length}>
-									<div className="flex flex-col items-center text-center py-10 gap-2">
-										{emptyStateProps?.icon}
-										<h2 className="text-xl font-bold">{emptyStateProps?.title}</h2>
-										<p className="text-gray-500">{emptyStateProps?.subTitle}</p>
+									<div className="py-6">
+										<EmptyState
+											title="No Data Found"
+											icon={<Braces />}
+											{...emptyStateProps}
+										/>
 									</div>
 								</td>
 							</tr>

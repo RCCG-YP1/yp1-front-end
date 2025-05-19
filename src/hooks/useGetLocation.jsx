@@ -1,55 +1,57 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCity, setError, setLoading } from "../store/slices/locationSlice";
 
 const useUserLocation = () => {
-	const [city, setCity] = useState(null); //<string | null>
-	const [error, setError] = useState(null); //<string | null>
+	const dispatch = useDispatch();
+	const { city, error, isLoading } = useSelector(state => state.location);
 
-	const handlePositionSuccess = useCallback(position => {
-		//position: GeolocationPosition
-		const { latitude, longitude } = position.coords;
-		fetchCityFromCoordinates(latitude, longitude);
-	}, []);
+	const fetchCityFromCoordinates = useCallback(
+		async (latitude, longitude) => {
+			try {
+				const apiKey = import.meta.env.VITE_OPENCAGE_API_KEY;
+				const geocodeUrl = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
+
+				const response = await fetch(geocodeUrl);
+				const data = await response.json();
+				if (data.results && data.results.length > 0) {
+					const city =
+						data.results[0].components.county || data.results[0].components.state;
+					dispatch(setCity(city || "City not found"));
+				} else {
+					dispatch(setCity("City not found"));
+				}
+			} catch (error) {
+				dispatch(setError("Error fetching city: " + error.message));
+			}
+		},
+		[dispatch]
+	);
+
+	const getLocation = useCallback(() => {
+		dispatch(setLoading());
+
+		if (!navigator.geolocation) {
+			dispatch(setError("Geolocation is not supported by this browser."));
+			return;
+		}
+
+		navigator.geolocation.getCurrentPosition(
+			position => {
+				const { latitude, longitude } = position.coords;
+				fetchCityFromCoordinates(latitude, longitude);
+			},
+			error => {
+				dispatch(setError(`Error getting location: ${error.message}`));
+			}
+		);
+	}, [dispatch, fetchCityFromCoordinates]);
 
 	useEffect(() => {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				handlePositionSuccess,
-				handlePositionError
-			);
-		} else {
-			setError("Geolocation is not supported by this browser.");
-		}
-	}, [handlePositionSuccess]);
+		getLocation();
+	}, [getLocation]);
 
-	const handlePositionError = error => {
-		// error: GeolocationPositionError
-		setError(`Error getting location: ${error.message}`);
-	};
-
-	const fetchCityFromCoordinates = async (latitude, longitude) => {
-		const apiKey = import.meta.env.VITE_OPENCAGE_API_KEY;
-		const geocodeUrl = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
-
-		try {
-			const response = await fetch(geocodeUrl);
-			const data = await response.json();
-			const results = data.results;
-
-			if (results.length > 0) {
-				const city =
-					results[0].components.road ||
-					results[0].components.county ||
-					results[0].components.state;
-				setCity(city || "City not found");
-			} else {
-				setCity("City not found");
-			}
-		} catch (error) {
-			setError("Error fetching city: " + error.message);
-		}
-	};
-
-	return { city, error };
+	return { city, error, isLoading };
 };
 
 export default useUserLocation;

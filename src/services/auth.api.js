@@ -12,21 +12,27 @@ const baseQuery = fetchBaseQuery({
 export const authApi = createApi({
 	baseQuery,
 	reducerPath: "authApi",
-	tagTypes: ["userData", "settings", "transactions"],
+	tagTypes: ["userData"],
 	endpoints: builder => ({
 		login: builder.mutation({
-			query: credentials => ({
-				url: "/login",
-				method: "POST",
-				body: credentials,
-			}),
+			query: credentials => {
+				return {
+					url: "/login",
+					method: "POST",
+					body: credentials,
+				};
+			},
+			invalidatesTags: ["userData"],
 		}),
 		register: builder.mutation({
-			query: credentials => ({
-				url: "/register",
-				method: "POST",
-				body: credentials,
-			}),
+			query: body => {
+				return {
+					url: "/register",
+					method: "POST",
+					body,
+				};
+			},
+			invalidatesTags: ["userData"],
 		}),
 	}),
 });

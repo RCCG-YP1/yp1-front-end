@@ -1,10 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
 import ScrollToTop from "@/components/scrollToTop";
 import Explore from "./pages/explore";
 import Province from "./pages/province";
 import CreateAccount from "./pages/account/create-account";
-import PersonalInformation from "./pages/account/personal-information";
 import Layout from "./layouts";
 import EventDetails from "./pages/explore/event-details";
 import ParishDetails from "./pages/explore/parish-details";
@@ -19,9 +17,14 @@ import AdminPastors from "./pages/admin/pastors";
 import News from "./pages/news";
 import AdminInformation from "./pages/admin/information";
 import Home from "./pages";
+import ProtectedRoute from "./components/protected-route";
+import { useGetLoggedInUserDetailQuery } from "./services/api";
+import { useGetUser } from "./hooks/getUserHook";
 
 export default function AllRoutes() {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	useGetLoggedInUserDetailQuery();
+	const { isLoggedIn, isAdmin } = useGetUser();
+
 	return (
 		<>
 			{/* fix to scroll to top automatically when page changes */}
@@ -37,27 +40,23 @@ export default function AllRoutes() {
 					<Route
 						path="/accounts"
 						index
-						element={
-							isLoggedIn ? (
-								<Profile setIsLoggedIn={setIsLoggedIn} />
-							) : (
-								<NotLoggedIn setIsLoggedIn={setIsLoggedIn} />
-							)
-						}
+						element={isLoggedIn ? <Profile /> : <NotLoggedIn />}
 					/>
-					<Route path="/profile" index element={<Profile />} />
 					<Route path="/create-account" index element={<CreateAccount />} />
 					<Route path="/sign-in" index element={<SignIn />} />
-					<Route
-						path="/personal-information"
-						index
-						element={<PersonalInformation />}
-					/>
 
 					{/* admin */}
 				</Route>
 
-				<Route path="/admin" element={<DashboardLayout baseUrl="/admin" />}>
+				<Route path="/admin/sign-in" index element={<SignIn type="admin" />} />
+				<Route
+					path="/admin"
+					element={
+						<ProtectedRoute allow={isAdmin}>
+							<DashboardLayout baseUrl="/admin" />
+						</ProtectedRoute>
+					}
+				>
 					<Route index path="" element={<AdminHome />} />
 					<Route index path="parishes" element={<AdminParishes />} />
 					<Route index path="pastors" element={<AdminPastors />} />
